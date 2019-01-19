@@ -1,0 +1,21 @@
+#!/bin/sh
+
+filename=$1
+
+if [ x"$filename" = "x" ]; then
+    echo "Usage: $(basename $0) <filename>"
+    echo "    -- Copy guest '/share/<filename>' to local directory"
+    exit 1
+fi
+
+. $(dirname $0)/system.conf
+
+
+echo "#1# check the $filename in guest /share/"
+$ssh_run_base ls -l /share/$filename
+
+echo "#2# start copy..."
+$ssh_scp_base $ssh_guest_address:/share/$filename .
+
+echo "#3# check the $filename in current directory"
+ls -l ./$filename

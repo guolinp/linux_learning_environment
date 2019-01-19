@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+cd $project_linux_device_driver_dir/test_suite && make

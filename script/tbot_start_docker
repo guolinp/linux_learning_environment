@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+command_str="$1"
+
+if [ x"$command_str" = "x" ]; then
+    command_str="bash"
+fi
+
+docker run -it --rm -v $tbot_testcase_dir:/tbot/testcases $tbot_docker_image "$command_str"

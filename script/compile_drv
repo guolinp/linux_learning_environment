@@ -1,0 +1,24 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+drv_name="$1"
+
+if [ x"$drv_name" = "xall" ]; then
+    for drv_dir in $(ls $project_linux_device_driver_dir/*/Makefile | xargs dirname)
+    do
+        cd $drv_dir && make
+    done
+    exit 0
+fi
+
+if [ x"$drv_name" = "x" -o ! -d "$project_linux_device_driver_dir/$drv_name" ]; then
+    echo "Usage: $(basename $0) <drv_name | all>"
+    echo "    -- drv_name : compile driver $project_linux_device_driver_dir/<drv_name>"
+    echo "    -- all      : compile all drivers in $project_linux_device_driver_dir"
+    exit 1
+fi
+
+cd $project_linux_device_driver_dir/$drv_name && make
+exit $?
