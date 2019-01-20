@@ -1,0 +1,13 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+mkdir -p $project_dir
+
+if [ ! -d "$project_linux_device_driver_dir" ]; then
+    echo "clone 'linux_device_driver' project"
+    cd $project_dir && git clone $project_linux_device_driver_url
+else
+    echo "project dir: $project_linux_device_driver_dir has existed"
+fi

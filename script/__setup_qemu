@@ -1,0 +1,23 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+software_dir=$topdir/software
+
+mkdir -p $software_dir
+mkdir -p $software_dir/tarballs
+
+
+if [ ! -d "$qemu_dir" ]; then
+    echo "start compile qemu..."
+    cd $software_dir &&                                        \
+    wget $qemu_url &&                                          \
+    tar xvf ${qemu_release}.tar.xz &&                          \
+    mv ${qemu_release}.tar.xz $software_dir/tarballs/ &&       \
+    cd $qemu_release &&                                        \
+    ./configure &&                                             \
+    make
+else
+    echo "qemu dir: $qemu_dir has existed"
+fi

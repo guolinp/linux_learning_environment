@@ -1,46 +1,7 @@
 #!/bin/sh
 
-. $(dirname $0)/system.conf
+setup_scripts_dir=$(dirname $0)
 
-
-software_dir=$topdir/software
-
-mkdir -p $software_dir
-mkdir -p $software_dir/tarballs
-
-if [ ! -d "$buildroot_dir" ]; then
-    echo "start compile buildroot..."
-    cd $software_dir &&                                        \
-    wget $buildroot_url &&                                     \
-    tar xvf ${buildroot_release}.tar.gz &&                     \
-    mv ${buildroot_release}.tar.gz $software_dir/tarballs/ &&  \
-    cp -rf $buildroot_overlay_dir/* $buildroot_release/ &&     \
-    cd $buildroot_release &&                                   \
-    ln -s $software_dir/tarballs dl &&                         \
-    make qemu_arm_vexpress_defconfig &&                        \
-    make
-else
-    echo "buildroot dir: $buildroot_dir has existed"
-fi
-
-
-if [ ! -d "$qemu_dir" ]; then
-    echo "start compile qemu..."
-    cd $software_dir &&                                        \
-    wget $qemu_url &&                                          \
-    tar xvf ${qemu_release}.tar.xz &&                          \
-    mv ${qemu_release}.tar.xz $software_dir/tarballs/ &&       \
-    cd $qemu_release &&                                        \
-    ./configure &&                                             \
-    make
-else
-    echo "qemu dir: $qemu_dir has existed"
-fi
-
-
-if [ ! -d "$project_linux_device_driver_dir" ]; then
-    echo "clone 'linux_device_driver' project"
-    cd $topdir && git clone $project_linux_device_driver_url
-else
-    echo "project dir: $project_linux_device_driver_dir has existed"
-fi
+$setup_scripts_dir/__setup_buildroot
+$setup_scripts_dir/__setup_qemu
+$setup_scripts_dir/__setup_project_linux_device_driver
