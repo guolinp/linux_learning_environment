@@ -1,1 +1,8 @@
-# linux_learning_environment-
+# What is it?
+* This project targets to build an environment for linux learning such as driver, application, test...
+
+# Documents
+* [How to setup environment?](https://github.com/guolinp/linux_learning_environment/blob/master/document/setup_environment.md)
+* [How to run u-boot in qemu?](https://github.com/guolinp/linux_learning_environment/blob/master/document/qemu_run_uboot.md)
+* [How to run linux in qemu?](https://github.com/guolinp/linux_learning_environment/blob/master/document/qemu_run_linux.md)
+* [How to run tbot testcase?](https://github.com/guolinp/linux_learning_environment/blob/master/document/tbot_run_testcase.md)
