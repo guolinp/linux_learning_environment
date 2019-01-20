@@ -1,0 +1,5 @@
+#!/bin/sh
+
+testcase_dir=$(dirname $0)
+
+/root/.local/bin/tbot -T $testcase_dir --list-testcases | grep qemu_linux_
