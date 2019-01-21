@@ -1,0 +1,27 @@
+#!/usr/bin/python
+
+import os
+import sys
+import pty
+import signal
+import subprocess
+
+basedir = os.path.dirname(sys.argv[0])
+
+app_commands = [os.path.join(basedir, "qemu_linux_start"), "-q"]
+pts_linkname = os.path.join(basedir, "board_linux.tty")
+
+def signal_handler(sig, frame):
+    os.remove(pts_linkname)
+    os.killpg(os.getpgid(p.pid), signal.SIGTERM)
+    sys.exit(0)
+signal.signal(signal.SIGINT, signal_handler)
+
+master, slave = pty.openpty()
+pts_name = os.ttyname(slave)
+if os.path.islink(pts_linkname):
+    os.remove(pts_linkname)
+os.symlink(pts_name, pts_linkname)
+print "create pty:", pts_linkname, "-->", pts_name
+p = subprocess.Popen(app_commands, stdin=master,stdout=master,stderr=master)
+p.wait()

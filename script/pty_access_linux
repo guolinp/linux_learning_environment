@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+$topdir/script/pty_connector -nt $topdir/script/board_linux.tty
