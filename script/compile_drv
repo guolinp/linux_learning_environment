@@ -5,10 +5,13 @@
 
 drv_name="$1"
 
+export ENV_CC_COMPILE=$cross_compile
+export ENV_KERNEL_DIR=$linux_dir
+
 if [ x"$drv_name" = "xall" ]; then
-    for drv_dir in $(ls $project_linux_device_driver_dir/*/Makefile | xargs dirname)
+    for drv_dir in $(ls $project_linux_device_driver_dir/*/Makefile | xargs dirname | grep -v test_suite)
     do
-        cd $drv_dir && make
+        cd $drv_dir && make clean && make
     done
     exit 0
 fi
@@ -20,5 +23,5 @@ if [ x"$drv_name" = "x" -o ! -d "$project_linux_device_driver_dir/$drv_name" ]; 
     exit 1
 fi
 
-cd $project_linux_device_driver_dir/$drv_name && make
+cd $project_linux_device_driver_dir/$drv_name && make clean && make
 exit $?
