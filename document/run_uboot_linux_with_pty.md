@@ -1,11 +1,5 @@
 # Run uboot or linux with a pty
 
-## Why does it?
-By default, when we start a uboot/linux instance in QEMU, the current terminal as the interactive shell, this is ok for most of time.
-But in case of automic test, the framework does not need a interactive shell, it requires a channel that can send/receive command/data.
-To reach the goal here is a solution that is adding a wrapper where redirects the uboot/linux stdin,stout and stderr to a pty file, 
-then automic test framework could access the pty file with a small application `pty_connector` to interactive with uboot/linux.
-
 ## Run uboot
 - run script `pty_run_uboot` to start in the first terminal. press `ctrl+c` to exit.
 ```bash
