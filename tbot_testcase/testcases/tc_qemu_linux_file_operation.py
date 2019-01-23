@@ -7,29 +7,32 @@ from tbot.machine import linux
 
 
 @tbot.testcase
-def qemu_linux_file_create(
-    lab: typing.Optional[tbot.selectable.LabHost] = None,
-    board_linux: typing.Optional[board.LinuxMachine] = None,
+def file_create(
+    lnx: typing.Optional[linux.LinuxMachine]
 ) -> None:
-    with contextlib.ExitStack() as cx:
-        lh = cx.enter_context(lab or tbot.acquire_lab())
-        if board_linux is not None:
-            lnx = board_linux
-        else:
-            b = cx.enter_context(tbot.acquire_board(lh))
-            lnx = cx.enter_context(tbot.acquire_linux(b))
-
         f = lnx.workdir / "testfile"
-
         lnx.exec0("touch", f)
         assert f.exists()
-
         lnx.exec0("rm", "-f",  f)
         assert not f.exists()
 
 
 @tbot.testcase
-def qemu_linux_file_read_write(
+def file_read_write(
+    lnx: typing.Optional[linux.LinuxMachine]
+) -> None:
+        f = lnx.workdir / "testfile"
+        lnx.exec0("touch", f)
+        assert f.exists()
+        lnx.exec0("echo", "Hello", stdout=f)
+        out = lnx.exec0("cat", f)
+        assert out == "Hello\n", repr(out)
+        lnx.exec0("rm", "-f",  f)
+        assert not f.exists()
+
+
+@tbot.testcase
+def qemu_linux_file_operation(
     lab: typing.Optional[tbot.selectable.LabHost] = None,
     board_linux: typing.Optional[board.LinuxMachine] = None,
 ) -> None:
@@ -41,14 +44,8 @@ def qemu_linux_file_read_write(
             b = cx.enter_context(tbot.acquire_board(lh))
             lnx = cx.enter_context(tbot.acquire_linux(b))
 
-        f = lnx.workdir / "testfile"
-
-        lnx.exec0("touch", f)
-        assert f.exists()
-
-        lnx.exec0("echo", "Hello", stdout=f)
-        out = lnx.exec0("cat", f)
-        assert out == "Hello\n", repr(out)
-
-        lnx.exec0("rm", "-f",  f)
-        assert not f.exists()
+        tbot.tc.testsuite(
+            file_create,
+            file_read_write,
+            lnx=lnx,
+        )
