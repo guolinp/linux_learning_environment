@@ -8,4 +8,17 @@ if [ x"$testcase_name" = "x" ]; then
     exit 1
 fi
 
-/root/.local/bin/tbot --lab $testcase_dir/lab_qemu.py --board $testcase_dir/board_qemu.py -T $testcase_dir "$testcase_name"
+prefix=$(echo $testcase_name | cut -c '1-11')
+
+if [ "$prefix" = "qemu_uboot_" ]; then
+    echo "A uboot testcase: $testcase_name"
+    board="board_qemu_uboot.py"
+elif [ "$prefix" = "qemu_linux_" ]; then
+    echo "A Linux testcase: $testcase_name"
+    board="board_qemu_linux.py"
+else
+    echo "A Invalid testcase name: $testcase_name"
+    exit 1
+fi
+
+/root/.local/bin/tbot --lab $testcase_dir/lab_qemu.py --board $testcase_dir/$board -T $testcase_dir "$testcase_name"

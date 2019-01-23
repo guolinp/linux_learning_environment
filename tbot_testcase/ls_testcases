@@ -2,4 +2,4 @@
 
 testcase_dir=$(dirname $0)
 
-/root/.local/bin/tbot -T $testcase_dir --list-testcases | grep qemu_linux_
+/root/.local/bin/tbot -T $testcase_dir --list-testcases | grep -E "qemu_linux_|qemu_uboot_"

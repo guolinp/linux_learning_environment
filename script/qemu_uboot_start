@@ -2,16 +2,6 @@
 
 . $(dirname $0)/system.conf
 
-if [ x"$1" = "x" -o x"$1" != "x-q" ]; then
-    echo "==================================="
-    echo "====  QEMU: u-boot is starting ===="
-    echo "====  Press Ctrl+A+X to exit   ===="
-    echo "==================================="
-    echo ""
-    
-    sleep 1
-fi
-
 $qemu_system_arm -machine   vexpress-a9   \
                  -m         512M          \
                  -kernel    $uboot_image  \

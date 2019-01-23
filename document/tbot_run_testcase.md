@@ -16,7 +16,8 @@
   ├── run_one_testcase
   ├── testcases
   │   ├── tc_qemu_linux_file_operation.py
-  │   └── tc_qemu_linux_uname.py
+  │   |── tc_qemu_linux_uname.py
+  │   └── tc_qemu_uboot_version.py
   └── userconfig.py
   ```
 - ### Because the `tbot` installation is not easy, a docker image was introduced which contains all of `tbot` stuffs.
@@ -41,17 +42,12 @@
   # the password of username
   password = "******"
   
-  # ssh login board commands/script from your host
-  sshlogin_board_command = "/path/to/linux_learning_environment/script/login_linux"
+  # commands/script from your host
+  uboot_connection_command = "/path/to/linux_learning_environment/script/qemu_uboot_start"
+  linux_connection_command = "/path/to/linux_learning_environment/script/qemu_linux_start"
   ```
 
-- ### Start linux in qemu in the first terminal
-    ```bash
-    $ cd linux_learning_environment
-    $ ./script/qemu_linux_start
-    ```
-
-- ### Start `tbot` docker container in second terminal
+- ### Start `tbot` docker container
   ```bash
   $ cd linux_learning_environment
   $ ./script/tbot_start_docker
@@ -95,6 +91,7 @@
     qemu_linux_file_create
     qemu_linux_file_read_write
     qemu_linux_uname
+    qemu_uboot_version
     ```
   
   - #### run existed user test cases

@@ -1,12 +1,13 @@
 # the host IP where tbot-docker running
 # should NOT use loopback IP
-hostname = "10.0.2.15"
+hostname = "xxx.xxx.xxx.xxx"
 
 # the user name to ssh login host
-username = "panguolin"
+username = "your_login_username"
 
 # the password of username
-password = "111111"
+password = "xxxxxx"
 
-# ssh login board commands/script from your host
-sshlogin_board_command = "/path/to/linux_learning_environment/script/login_linux"
+# commands/script from your host
+uboot_connection_command = "/path/to/linux_learning_environment/script/qemu_uboot_start"
+linux_connection_command = "/path/to/linux_learning_environment/script/qemu_linux_start"
