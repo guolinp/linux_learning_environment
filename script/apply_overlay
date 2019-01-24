@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+cp -rf $topdir/overlay/* $topdir/software/
