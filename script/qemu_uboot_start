@@ -4,7 +4,7 @@
 
 
 $qemu_system_arm -machine   vexpress-a9      \
-                 -m         512M             \
+                 -m         256M             \
                  -kernel    $uboot_image     \
-                 -sd        $uboot_sd_image  \
+                 -sd        $uboot_sd        \
                  -nographic
