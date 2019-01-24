@@ -68,6 +68,17 @@
 		reg = <0x60000000 0x40000000>;
 	};
 
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		reserved_memory: dummydevice@7c000000 {
+			reg = <0x7c000000 0x4000000>;
+			no-map;
+		};
+	};
+
 	clcd@10020000 {
 		compatible = "arm,pl111", "arm,primecell";
 		reg = <0x10020000 0x1000>;
