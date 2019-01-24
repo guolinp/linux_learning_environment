@@ -2,7 +2,9 @@
 
 . $(dirname $0)/system.conf
 
-$qemu_system_arm -machine   vexpress-a9   \
-                 -m         512M          \
-                 -kernel    $uboot_image  \
+
+$qemu_system_arm -machine   vexpress-a9      \
+                 -m         512M             \
+                 -kernel    $uboot_image     \
+                 -sd        $uboot_sd_image  \
                  -nographic
