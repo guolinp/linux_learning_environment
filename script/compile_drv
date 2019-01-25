@@ -14,7 +14,6 @@ build_drv() #drv_dir
 
     export ENV_CC_COMPILE=$cross_compile
     export ENV_KERNEL_DIR=$linux_dir
-    export ENV_DRIVER_DIR=$drv_dir
 
     cd $drv_dir && make clean && make
 
