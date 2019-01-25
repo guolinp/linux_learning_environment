@@ -1,9 +1,9 @@
 # Linuxep
 
 ## What is the Linuxep?
-- ### see page: https://github.com/linuxep/linuxep
-- ### `lepd` is application ran in target board, it collects board usage
-- ### `lepv` is a client interactives with `lepd`, it may be a web page
+  - see page: https://github.com/linuxep/linuxep
+  - `lepd` is application ran in target board, it collects board usage
+  - `lepv` is a client that interactives with `lepd`, it may be a web page
 
 ## Run `lepd` in qemu board
 - ### install the linuxep project, the following script will clone and compile `lepd`
@@ -18,12 +18,10 @@
   remote: Total 724 (delta 0), reused 2 (delta 0), pack-reused 721
   Receiving objects: 100% (724/724), 5.49 MiB | 302.00 KiB/s, done.
   Resolving deltas: 100% (373/373), done.
-  mkdir -p /repo/guolinp/xLab189/linux_learning_environment/project/lepd/.objs
-  mkdir -p /repo/guolinp/xLab189/linux_learning_environment/project/lepd/libs
   ...
   ```
 
-- ### Start linux with QEMU in the first terminal
+- ### Start linux with qemu in the first terminal
   ```bash
   $ cd linux_learning_environment
   $ ./script/qemu_linux_start 
@@ -33,18 +31,15 @@
   ```bash
   $ cd linux_learning_environment
   $ ./script/lepd start
-  [lepd] copy /repo/guolinp/xLab189/linux_learning_environment/project/lepd/lepd to guest linux
-  #1# check the lepd in current directory
-  -rwxr-xr-x 1 guolinp platform 413068 Jan 25 12:58 /repo/guolinp/xLab189/linux_learning_environment/project/lepd/lepd
-  #2# start copy...
-  #3# check the lepd in guest /share/
+  [lepd] copy ......../lepd/lepd to guest linux
+  ...
   -rwx------    1 root     root        413068 Jan 25 05:01 /share/lepd
   [lepd] start 'lepd' in guest linux
   [lepd] run 'ps' in guest linux
     793 root     /share/lepd
   ```
 
-- ### Test `ledp`
+- ### Test `lepd`
   - note that the `ledp` as a server monitors the tcp port `12307` in guest by default, our qemu start script maps it to host tcp port `22080`
   - use `nc` tool to test, you need to install it in your host
   - run below command in host to get all methods `ledp` supported
