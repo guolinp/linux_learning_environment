@@ -9,7 +9,7 @@
 - ### install the linuxep project, the following script will clone and compile `lepd`
   ```bash
   $ cd linux_learning_environment
-  $ $ ./script/__setup_project_linuxep                                    
+  $ ./script/__setup_project_linuxep                                    
   clone 'lepd' project
   Cloning into 'lepd'...
   remote: Enumerating objects: 3, done.
@@ -59,6 +59,7 @@
 
 ## Run `lepv` in host
 - ### The `lepv` runs in a docker
+  - get docker image from: https://hub.docker.com/r/linuxep/lepv
 - ### Start the `lepv` container in host
   ```bash
   $ cd linux_learning_environment
