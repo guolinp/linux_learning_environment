@@ -9,3 +9,4 @@
 * [How to boot linux in uboot?](https://github.com/guolinp/linux_learning_environment/blob/master/document/boot_linux_in_uboot.md)
 * [How to run uboot or linux with a pty?](https://github.com/guolinp/linux_learning_environment/blob/master/document/run_uboot_linux_with_pty.md)
 * [How to run tbot testcase?](https://github.com/guolinp/linux_learning_environment/blob/master/document/tbot_run_testcase.md)
+* [How to run lepd?](https://github.com/guolinp/linux_learning_environment/blob/master/document/linuxep.md)

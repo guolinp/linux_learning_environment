@@ -14,7 +14,7 @@ fi
 filename=$(basename $pathname)
 
 echo "#1# check the $filename in current directory"
-ls -l ./$pathname
+ls -l $pathname
 
 echo "#2# start copy..."
 $ssh_run_base mkdir -p /share

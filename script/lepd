@@ -1,0 +1,32 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+program=$(basename $0)
+
+case "$1" in
+  start)
+        lepd=$project_linuxep_lepd_dir/lepd
+        echo "[$program] copy $lepd to guest linux"
+        $topdir/script/copy_to_linux $lepd
+        echo "[$program] start 'lepd' in guest linux"
+        $ssh_run_base /share/lepd
+        echo "[$program] run 'ps' in guest linux"
+        $ssh_run_base ps | grep lepd
+        ;;
+  stop)
+        echo "[$program] run 'killall lepd' in guest linux"
+        $ssh_run_base killall lepd
+        echo "[$program] run 'ps' in guest linux"
+        $ssh_run_base ps | grep lepd
+        ;;
+  status)
+        echo "[$program] run 'ps' in guest linux"
+        $ssh_run_base ps | grep lepd
+        ;;
+  *)
+        echo "Usage: $program {start|stop|status}"
+        exit 1
+esac
+
+exit $?

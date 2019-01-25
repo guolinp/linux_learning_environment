@@ -73,10 +73,18 @@
 		#size-cells = <1>;
 		ranges;
 
-		reserved_memory: dummydevice@7c000000 {
-			reg = <0x7c000000 0x4000000>;
+		reserved_memory: reservedmemory@6e000000 {
 			no-map;
+			reg = <0x6e000000 0x2000000>;
 		};
+	};
+
+	firmware-memory {
+		compatible = "memloader", "simple-bus";
+		load-address = <0x0 0x6e000000>;
+		firmware-load;
+		firmware-filename = "demo_firmware_filename";
+		firmware-blocksize = <0x20000>;
 	};
 
 	clcd@10020000 {

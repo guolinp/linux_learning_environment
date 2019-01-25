@@ -1,0 +1,22 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+mkdir -p $project_dir
+
+if [ ! -d "$project_linuxep_lepd_dir" ]; then
+    echo "clone 'lepd' project"
+    cd $project_dir && git clone $project_linuxep_lepd_url
+    # compile lepd. workarounds
+    # 1.  set our cross compiler
+    # 2.  set our lib path
+    # 3.  remove '-static' link option as the prebuild libev.a does not work in our toolchain
+    cd $project_linuxep_lepd_dir && \
+    sed -i "s!arm-linux-gnueabi-!$cross_compile!g" Makefile && \
+    sed -i "s!PROJECT_EV_DIR=.*!PROJECT_EV_DIR=$buildroot_dir/output/target/usr/lib!g" Makefile && \
+    sed -i "s!-static!!g" Makefile && \
+    make ARCH=arm
+else
+    echo "project dir: $project_linuxep_lepd_dir has existed"
+fi
