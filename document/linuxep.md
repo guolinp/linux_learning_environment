@@ -69,3 +69,8 @@
 - ### Open browser with address `HOST-IP:22080`
   - there is a window in web page which requires an address
   - fill the host IP and click connect-button
+- ### Stop the `lepv` container
+  ```bash
+  $ cd linux_learning_environment
+  $ ./script/lepv stop
+  ```
