@@ -20,6 +20,12 @@ if [ "$?" != "0" ]; then
     exit 1
 fi
 
+$setup_scripts_dir/__setup_smem
+if [ "$?" != "0" ]; then
+    echo "ERROR: setup smem"
+    exit 1
+fi
+
 $setup_scripts_dir/__setup_project_linux_device_driver
 if [ "$?" != "0" ]; then
     echo "ERROR: setup project linux_device_driver"

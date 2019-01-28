@@ -1,0 +1,23 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+software_dir=$topdir/software
+
+mkdir -p $software_dir
+mkdir -p $software_dir/tarballs
+
+smem_release="smem-1.4"
+
+if [ ! -d "$software_dir/$smem_release" ]; then
+    echo "start compile smem..."
+    cd  $software_dir &&                                                                      \
+    wget https://www.selenic.com/smem/download/$smem_release.tar.gz &&                        \
+    tar xvf $smem_release.tar.gz &&                                                           \
+    mv $smem_release.tar.gz $software_dir/tarballs/ &&                                        \
+    cd $smem_release &&                                                                       \
+    $cross_gcc smemcap.c -o smemcap
+else
+    echo "smem dir: $smem_release has existed"
+fi

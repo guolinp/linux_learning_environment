@@ -1,0 +1,34 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+program=$(basename $0)
+
+smemcap=$smem_dir/smemcap
+hostsmem=$smem_dir/smem
+capdata=capdata.gz
+
+echo "[$program] copy $smemcap to guest linux"
+$topdir/script/copy_to_linux $smemcap
+
+echo "[$program] start 'smemcap' in guest linux"
+$ssh_run_base "/share/smemcap > /share/$capdata"
+
+echo "[$program] run 'ls -l /share/$capdata' in guest linux"
+$ssh_run_base ls -l /share/$capdata
+
+echo "[$program] copy '/share/$capdata' to here"
+$topdir/script/copy_from_linux $capdata
+
+echo "[$program] show report"
+echo ""
+$hostsmem -S $capdata -s pid -t
+echo ""
+$hostsmem -S $capdata -m
+echo ""
+$hostsmem -S $capdata -u
+echo ""
+$hostsmem -S $capdata -w
+
+echo "[$program] remove '$capdata'"
+rm -rf $capdata
