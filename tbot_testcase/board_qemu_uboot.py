@@ -35,16 +35,12 @@ class QemuLinux(board.LinuxWithUBootMachine[QemuBoard]):
     password = "root"
     shell    = linux.shell.Bash 
 
-    #boot_commands = [
-    #    ["setenv", "serverip", "192.168.1.1"],
-    #    ["setenv", "netmask", "255.255.0.0"],
-    #    ["setenv", "ipaddr", "192.168.20.95"],
-    #    ["mw", "0x81000000", "0", "0x4000"],
-    #    ["tftp", "0x81000000", "bbb/tbot/env.txt"],
-    #    ["env", "import", "-t", "0x81000000"],
-    #    ["setenv", "rootpath", "/opt/..."],
-    #    ["run", "netnfsboot"],
-    #]
+    boot_commands = [
+        ["setenv", "bootargs", "'root=/dev/mmcblk0 rw console=ttyAMA0 init=/linuxrc'"],
+        ["ext2load", "mmc", "0x60100000", "/boot/uImage"],
+        ["ext2load", "mmc", "0x60600000", "/boot/vexpress-v2p-ca9.dtb"],
+        ["bootm", "0x60100000", "-", "0x60600000"],
+    ]
 
 
 BOARD = QemuBoard

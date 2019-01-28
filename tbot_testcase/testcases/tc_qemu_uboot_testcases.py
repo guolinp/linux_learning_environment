@@ -5,7 +5,15 @@ from tbot.machine import board
 
 
 @tbot.testcase
-def qemu_uboot_version(
+def uboot_verify_version(
+    ub: typing.Optional[board.UBootMachine]
+) -> None:
+    out = ub.exec0("version")
+    print("u-boot version: %s" % out)
+
+
+@tbot.testcase
+def qemu_uboot_testcases(
     lab: typing.Optional[tbot.selectable.LabHost] = None
 ) -> None:
     with contextlib.ExitStack() as cx:
@@ -17,5 +25,7 @@ def qemu_uboot_version(
             b = cx.enter_context(QemuBoard(lh))
             ub = cx.enter_context(QemuUBoot(b))
 
-        out = ub.exec0("version")
-        print("u-boot version: %s" % out)
+        tbot.tc.testsuite(
+            uboot_verify_version,
+            ub=ub,
+        )

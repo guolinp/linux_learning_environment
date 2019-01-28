@@ -7,32 +7,35 @@ from tbot.machine import linux
 
 
 @tbot.testcase
-def file_create(
+def linux_verify_uname(
     lnx: typing.Optional[linux.LinuxMachine]
 ) -> None:
-        f = lnx.workdir / "testfile"
-        lnx.exec0("touch", f)
-        assert f.exists()
-        lnx.exec0("rm", "-f",  f)
-        assert not f.exists()
+    out = lnx.exec0("uname", "-n").strip()
+    assert out == "buildroot", repr(out)
 
 
 @tbot.testcase
-def file_read_write(
+def linux_regular_file_operations(
     lnx: typing.Optional[linux.LinuxMachine]
 ) -> None:
-        f = lnx.workdir / "testfile"
-        lnx.exec0("touch", f)
-        assert f.exists()
-        lnx.exec0("echo", "Hello", stdout=f)
-        out = lnx.exec0("cat", f)
-        assert out == "Hello\n", repr(out)
-        lnx.exec0("rm", "-f",  f)
-        assert not f.exists()
+    # create 'testfile'
+    f = lnx.workdir / "testfile"
+    lnx.exec0("touch", f)
+    assert f.exists()
+
+    # write and read
+    lnx.exec0("echo", "Hello", stdout=f)
+    out = lnx.exec0("cat", f)
+    assert out == "Hello\n", repr(out)
+
+    # remove 'testfile'
+    lnx.exec0("rm", "-f",  f)
+    assert not f.exists()
 
 
+# testsuite
 @tbot.testcase
-def qemu_linux_file_operation(
+def qemu_linux_testcases(
     lab: typing.Optional[tbot.selectable.LabHost] = None,
     board_linux: typing.Optional[board.LinuxMachine] = None,
 ) -> None:
@@ -45,7 +48,7 @@ def qemu_linux_file_operation(
             lnx = cx.enter_context(tbot.acquire_linux(b))
 
         tbot.tc.testsuite(
-            file_create,
-            file_read_write,
+            linux_verify_uname,
+            linux_regular_file_operations,
             lnx=lnx,
         )
