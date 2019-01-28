@@ -3,5 +3,25 @@
 setup_scripts_dir=$(dirname $0)
 
 $setup_scripts_dir/__setup_buildroot
+if [ "$?" != "0" ]; then
+    echo "ERROR: setup buildroot"
+    exit 1
+fi
+
 $setup_scripts_dir/__setup_qemu
+if [ "$?" != "0" ]; then
+    echo "ERROR: setup qemu"
+    exit 1
+fi
+
+$setup_scripts_dir/__setup_sshpass
+if [ "$?" != "0" ]; then
+    echo "ERROR: setup sshpass"
+    exit 1
+fi
+
 $setup_scripts_dir/__setup_project_linux_device_driver
+if [ "$?" != "0" ]; then
+    echo "ERROR: setup project linux_device_driver"
+    exit 1
+fi
