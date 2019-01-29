@@ -3,8 +3,8 @@
 . $(dirname $0)/system.conf
 
 
-$qemu_system_arm -machine   vexpress-a9      \
-                 -m         256M             \
-                 -kernel    $uboot_image     \
-                 -sd        $uboot_sd        \
+$qemu_system_arm -machine   vexpress-a9                        \
+                 -m         512M                               \
+                 -kernel    $uboot_image                       \
+                 -drive     file=$uboot_sd,if=sd,format=raw    \
                  -nographic

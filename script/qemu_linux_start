@@ -6,7 +6,7 @@ ssh_fwd="tcp::$ssh_guest_port-:22"
 lepd_fwd="tcp::$project_linuxep_lepd_port-:12307"
 
 $qemu_system_arm -machine   vexpress-a9                                          \
-                 -m         256M                                                 \
+                 -m         512M                                                 \
                  -kernel    $linux_kernel                                        \
                  -dtb       $linux_dtb                                           \
                  -drive     file=$linux_rootfs,if=sd,format=raw                  \
