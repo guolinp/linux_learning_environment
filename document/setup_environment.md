@@ -12,6 +12,8 @@
   ```bash
   $ ./script/__setup_buildroot
   $ ./script/__setup_qemu
+  $ ./script/__setup_sshpass
+  $ ./script/__setup_smem
   $ ./script/__setup_project_linux_device_driver
   ```
 - ### if you encounter errors such as some packages missed in you host/pc, resolve it by yourself, sorry.
