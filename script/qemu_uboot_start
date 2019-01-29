@@ -2,9 +2,12 @@
 
 . $(dirname $0)/system.conf
 
+ssh_fwd="tcp::$ssh_guest_port-:22"
+lepd_fwd="tcp::$project_linuxep_lepd_port-:12307"
 
-$qemu_system_arm -machine   vexpress-a9                        \
-                 -m         512M                               \
-                 -kernel    $uboot_image                       \
-                 -drive     file=$uboot_sd,if=sd,format=raw    \
+$qemu_system_arm -machine   vexpress-a9                                          \
+                 -m         512M                                                 \
+                 -kernel    $uboot_image                                         \
+                 -drive     file=$uboot_sd,if=sd,format=raw                      \
+                 -net       user,hostfwd=$ssh_fwd,hostfwd=$lepd_fwd -net nic     \
                  -nographic

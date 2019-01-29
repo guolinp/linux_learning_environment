@@ -10,14 +10,11 @@ mkdir -p $software_dir/tarballs
 
 if [ ! -d "$buildroot_dir" ]; then
     echo "start compile buildroot..."
-    cd $software_dir &&                                        \
-    wget $buildroot_url &&                                     \
-    tar xvf ${buildroot_release}.tar.gz &&                     \
-    mv ${buildroot_release}.tar.gz $software_dir/tarballs/ &&  \
-    cp -rf $buildroot_overlay_dir/* $buildroot_release/ &&     \
-    cd $buildroot_release &&                                   \
-    ln -s $software_dir/tarballs dl &&                         \
-    make qemu_arm_vexpress_defconfig &&                        \
+    cd $software_dir &&                   \
+    git clone $buildroot_url &&           \
+    cd $buildroot_dir &&                  \
+    ln -s $software_dir/tarballs dl &&    \
+    make qemu_arm_vexpress_defconfig &&   \
     make
 else
     echo "buildroot dir: $buildroot_dir has existed"
