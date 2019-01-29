@@ -3,4 +3,4 @@
 . $(dirname $0)/system.conf
 
 
-$ssh_run_base
+$ssh_run_base "$@"

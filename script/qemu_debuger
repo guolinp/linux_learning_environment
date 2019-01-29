@@ -1,0 +1,5 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+$cross_gdb "$@" --eval-command="target remote :1234"
