@@ -7,12 +7,12 @@ container_name="lepv_linux_learning_environment"
 
 case "$1" in
   start)
-        docker stop $container_name
+        docker stop $container_name 2>/dev/null
         docker run --rm -d --name $container_name -p 22080:80 linuxep/lepv
         echo "try to open browser, input: <your_host_ip>:22080"
         ;;
   stop)
-        docker stop $container_name
+        docker stop $container_name 2>/dev/null
         ;;
   *)
         echo "Usage: $program {start|stop}"
