@@ -1,0 +1,15 @@
+#!/bin/sh
+
+
+has_errors="no"
+
+necessary_tools="realpath wget git gcc docker"
+for tool in $necessary_tools
+do
+    if ! $tool --help >/dev/null 2>&1; then
+        echo "ERROR: please install: '$tool'"
+        has_errors="yes"
+    fi
+done
+
+[ "$has_errors" = "no" ] && exit 0 || exit 1

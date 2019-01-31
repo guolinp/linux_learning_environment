@@ -2,6 +2,11 @@
 
 setup_scripts_dir=$(dirname $0)
 
+
+if ! $setup_scripts_dir/check_host_environment; then
+    exit $?
+fi
+
 $setup_scripts_dir/__setup_buildroot
 if [ "$?" != "0" ]; then
     echo "ERROR: setup buildroot"
