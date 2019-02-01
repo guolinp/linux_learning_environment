@@ -19,14 +19,11 @@ class QemuBoard(board.Board):
 
     def connect(self) -> channel.Channel:
         channel = self.lh.new_channel(userconfig.uboot_connection_command)
-        channel.send("\n")
-        channel.send("reset\n")
         return channel
 
 
 class QemuUBoot(board.UBootMachine[QemuBoard]):
     prompt = "=> "
-    autoboot_prompt = None
 
 
 class QemuLinux(board.LinuxWithUBootMachine[QemuBoard]):
