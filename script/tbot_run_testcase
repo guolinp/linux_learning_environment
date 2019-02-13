@@ -3,6 +3,12 @@
 . $(dirname $0)/system.conf
 
 
-command_str="/tbot/testcases/run_all_testcases"
+command_str="/testcases/run_all_testcases"
 
-docker run -it --rm -v $tbot_testcase_dir:/tbot/testcases $tbot_docker_image "$command_str"
+mkdir -p $tbot_testcase_dir/log
+
+docker run -it --rm                                       \
+           -v $tbot_testcase_dir:/testcases               \
+           -v $tbot_testcase_dir/log:/log                 \
+           $tbot_docker_image                             \
+           "$command_str"

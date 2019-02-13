@@ -1,6 +1,5 @@
 #!/bin/sh
 
-testcase_dir=$(dirname $0)
 testcase_name="$1"
 
 if [ x"$testcase_name" = "x" ]; then
@@ -8,17 +7,48 @@ if [ x"$testcase_name" = "x" ]; then
     exit 1
 fi
 
-prefix=$(echo $testcase_name | cut -c '1-11')
+#
+# the dir should be mounted when container started
+#
+testcase_basedir="/testcases"
 
-if [ "$prefix" = "qemu_uboot_" ]; then
-    echo "A uboot testcase: $testcase_name"
-    board="board_qemu_uboot.py"
-elif [ "$prefix" = "qemu_linux_" ]; then
-    echo "A Linux testcase: $testcase_name"
-    board="board_qemu_linux.py"
-else
-    echo "A Invalid testcase name: $testcase_name"
-    exit 1
-fi
 
-/root/.local/bin/tbot --lab $testcase_dir/lab_qemu.py --board $testcase_dir/$board -T $testcase_dir "$testcase_name"
+#
+# the dir put the output reports, json and html log 
+#
+log_basedir="/log"
+log_jsonfile=$log_basedir/${testcase_name}.log
+log_htmlfile=$log_basedir/${testcase_name}.html
+
+#
+# prepare jobs
+#
+mkdir -p $log_basedir
+
+
+#
+# start run board testcases
+#
+/root/.local/bin/tbot --lab $testcase_basedir/lab.py      \
+                      --board $testcase_basedir/board.py  \
+                      --log $log_jsonfile                 \
+                      -T $testcase_basedir/testcases      \
+                      $testcase_name
+
+
+#
+# generate html report
+#
+/tbot/generators/htmllog.py $log_jsonfile > $log_htmlfile
+
+
+#
+# everyone can access the logs
+#
+chmod 777 $log_basedir/* -R
+
+
+#
+# clean jobs
+#
+find $testcase_basedir -name "__pycache__" -exec rm -rf {} \; 2> /dev/null

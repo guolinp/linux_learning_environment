@@ -3,11 +3,12 @@ import tbot
 from tbot.machine import board
 from tbot.machine import channel
 from tbot.machine import linux
-import userconfig
+
+import tc_config
 
 
 class QemuBoard(board.Board):
-    name = "Qemu-Board"
+    name = "QemuBoard"
 
     def poweron(self) -> None:
         # command to power on the board
@@ -18,15 +19,25 @@ class QemuBoard(board.Board):
         tbot.log.message(f"Not support 'poweroff' command for {self.name}")
 
     def connect(self) -> channel.Channel:
-        channel = self.lh.new_channel(userconfig.linux_connection_command)
+        channel = self.lh.new_channel(tc_config.connect_board_command)
         return channel
 
 
-class QemuBoard_Linux(board.LinuxStandaloneMachine[board.Board]):
+class QemuUBoot(board.UBootMachine[QemuBoard]):
+    prompt = "=> "
+
+
+class QemuLinux(board.LinuxWithUBootMachine[QemuBoard]):
+    uboot    = QemuUBoot
     username = "root"
     password = "root"
-    shell    = linux.shell.Bash
+    shell    = linux.shell.Bash 
+
+    boot_commands = [
+        ["run", "bootcmd"],
+    ]
 
 
 BOARD = QemuBoard
-LINUX = QemuBoard_Linux
+UBOOT = QemuUBoot
+LINUX = QemuLinux

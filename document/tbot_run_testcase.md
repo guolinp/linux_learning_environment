@@ -9,16 +9,15 @@
   $ cd linux_learning_environment/tbot_testcase
   $ tree
   .
-  ├── board_qemu.py
-  ├── lab_qemu.py
+  ├── board.py
+  ├── lab.py
   ├── ls_testcases
   ├── run_all_testcases
   ├── run_one_testcase
-  ├── testcases
-  │   ├── tc_qemu_linux_file_operation.py
-  │   |── tc_qemu_linux_uname.py
-  │   └── tc_qemu_uboot_version.py
-  └── userconfig.py
+  ├── tc_config.py
+  └── testcases
+      ├── tc_qemu_linux_testcases.py
+      └── tc_qemu_uboot_testcases.py
   ```
 - ### Because the `tbot` installation is not easy, a docker image was introduced which contains all of `tbot` stuffs.
   - the `tbot` docker: https://github.com/guolinp/tbot_docker
@@ -32,19 +31,13 @@
 
 - ### Config `tbot` settings in file `userconfig.py`
   ```bash
-  # the host IP where tbot-docker running
-  # should NOT use loopback IP
+  # Host: ip, username, password
   hostname = "xxx.xxx.xxx.xxx"
+  username = "xxxxxxxxxxxxxxx"
+  password = "xxxxxxxxxxxxxxx"
   
-  # the user name to ssh login host
-  username = "your_login_username"
-  
-  # the password of username
-  password = "******"
-  
-  # commands/script from your host
-  uboot_connection_command = "/path/to/linux_learning_environment/script/qemu_uboot_start"
-  linux_connection_command = "/path/to/linux_learning_environment/script/qemu_linux_start"
+  # This command will be ran in Host
+  connect_board_command = "/path/to/linux_learning_environment/script/qemu_uboot_start"
   ```
 
 - ### Start `tbot` docker container
@@ -88,105 +81,75 @@
     ```bash
     bash-4.4# cd /tbot/testcases
     bash-4.4# ./ls_testcases 
-    qemu_linux_file_create
-    qemu_linux_file_read_write
-    qemu_linux_uname
-    qemu_uboot_version
+    qemu_linux_testcases
+    qemu_uboot_testcases
     ```
   
-  - #### run existed user test cases
+  - #### run existed user testcase
     ```bash
-    bash-4.4# ./run_one_testcase qemu_linux_uname
+    bash-4.4# run_one_testcase qemu_linux_testcases
     tbot starting ...
-    ├─Calling qemu_linux_uname ...
-    │   ├─POWERON (Qemu-Board)
-    │   ├─Not support 'poweron' command for Qemu-Board
-    │   ├─LINUX (Qemu-Board-linux)
-    the output of 'uname -n' on board:  buildroot
-    
-    │   ├─POWEROFF (Qemu-Board)
-    │   ├─Not support 'poweroff' command for Qemu-Board
-    │   └─Done. (12.830s)
+    ├─Calling qemu_linux_testcases ...
+    │   ├─POWERON (QemuBoard)
+    │   ├─Not support 'poweron' command for QemuBoard
+    │   ├─UBOOT (QemuBoard-uboot)
+    │   ├─LINUX (QemuBoard-linux)
+    │   ├─Calling testsuite ...
+    │   │   ├─Calling linux_verify_uname ...
+    │   │   │   └─Done. (0.054s)
+    │   │   ├─Calling linux_regular_file_operations ...
+    │   │   │   └─Done. (0.219s)
+    │   │   ├─────────────────────────────────────────
+    │   │   │ Success: 2/2 tests passed
+    │   │   └─Done. (0.275s)
+    │   ├─POWEROFF (QemuBoard)
+    │   ├─Not support 'poweroff' command for QemuBoard
+    │   └─Done. (21.685s)
     ├─────────────────────────────────────────
-    ├─Log written to '/tbot/tbot-testcases/log/lab_qemu-board_qemu-0001.json'
-    └─SUCCESS (13.031s)
+    ├─Log written to '/log/qemu_linux_testcases.log'
+    └─SUCCESS (21.888s)
     ```
   
-## Create your test case, for example show free memory
-  - ### go to dir `/tbot/testcases/testcases`
-  - ### copy `tc_qemu_linux_uname.py` to `tc_qemu_linux_show_free_memory.py`
-      ```python
-      import contextlib
-      import typing
-      import tbot
-      from tbot.machine import board
-      
-      @tbot.testcase
-      def qemu_linux_uname(
-          lab: typing.Optional[tbot.selectable.LabHost] = None,
-          board_linux: typing.Optional[board.LinuxMachine] = None,
-      ) -> None:
-          with contextlib.ExitStack() as cx:
-              lh = cx.enter_context(lab or tbot.acquire_lab())
-              if board_linux is not None:
-                  lnx = board_linux
-              else:
-                  b = cx.enter_context(tbot.acquire_board(lh))
-                  lnx = cx.enter_context(tbot.acquire_linux(b))
-      
-            out = lnx.exec0("uname", "-n")
-            print("the output of 'uname -n' on board: ", out)
-      ```
-  - ### change the test name from `qemu_linux_uname` to `qemu_linux_show_free_memory`
-  - ### modify the last two lines to:
-      ```python
-      out = lnx.exec0("free", "-m")
-      print("the output of 'free -m' on board: ", out)
-      ```
-  - ### then, run it with command
-    ```bash
-    bash-4.4# ./run_one_testcase qemu_linux_show_free_memory
-    ```
-    
-## Run all test cases
+## Run all testcases
 - ### In host, run `./script/tbot_run_testcase`
   ```bash
   $ cd linux_learning_environment
   $ ./script/tbot_run_testcase 
   tbot starting ...
-  ├─Calling qemu_linux_file_create ...
-  │   ├─POWERON (Qemu-Board)
-  │   ├─Not support 'poweron' command for Qemu-Board
-  │   ├─LINUX (Qemu-Board-linux)
-  │   ├─POWEROFF (Qemu-Board)
-  │   ├─Not support 'poweroff' command for Qemu-Board
-  │   └─Done. (1.031s)
+  ├─Calling qemu_linux_testcases ...
+  │   ├─POWERON (QemuBoard)
+  │   ├─Not support 'poweron' command for QemuBoard
+  │   ├─UBOOT (QemuBoard-uboot)
+  │   ├─LINUX (QemuBoard-linux)
+  │   ├─Calling testsuite ...
+  │   │   ├─Calling linux_verify_uname ...
+  │   │   │   └─Done. (0.054s)
+  │   │   ├─Calling linux_regular_file_operations ...
+  │   │   │   └─Done. (0.219s)
+  │   │   ├─────────────────────────────────────────
+  │   │   │ Success: 2/2 tests passed
+  │   │   └─Done. (0.275s)
+  │   ├─POWEROFF (QemuBoard)
+  │   ├─Not support 'poweroff' command for QemuBoard
+  │   └─Done. (21.685s)
   ├─────────────────────────────────────────
-  ├─Log written to '/tbot/log/lab_qemu-board_qemu-0001.json'
-  └─SUCCESS (1.262s)
+  ├─Log written to '/log/qemu_linux_testcases.log'
+  └─SUCCESS (21.888s)
   tbot starting ...
-  ├─Calling qemu_linux_file_read_write ...
-  │   ├─POWERON (Qemu-Board)
-  │   ├─Not support 'poweron' command for Qemu-Board
-  │   ├─LINUX (Qemu-Board-linux)
-  │   ├─POWEROFF (Qemu-Board)
-  │   ├─Not support 'poweroff' command for Qemu-Board
-  │   └─Done. (1.074s)
+  ├─Calling qemu_uboot_testcases ...
+  │   ├─POWERON (QemuBoard)
+  │   ├─Not support 'poweron' command for QemuBoard
+  │   ├─UBOOT (QemuBoard-uboot)
+  │   ├─Calling testsuite ...
+  │   │   ├─Calling uboot_verify_version ...
+  │   │   │   └─Done. (0.015s)
+  │   │   ├─────────────────────────────────────────
+  │   │   │ Success: 1/1 tests passed
+  │   │   └─Done. (0.016s)
+  │   ├─POWEROFF (QemuBoard)
+  │   ├─Not support 'poweroff' command for QemuBoard
+  │   └─Done. (0.605s)
   ├─────────────────────────────────────────
-  ├─Log written to '/tbot/log/lab_qemu-board_qemu-0002.json'
-  └─SUCCESS (1.273s)
-  tbot starting ...
-  ├─Calling qemu_linux_uname ...
-  │   ├─POWERON (Qemu-Board)
-  │   ├─Not support 'poweron' command for Qemu-Board
-  │   ├─LINUX (Qemu-Board-linux)
-  the output of 'uname -n' on board:  buildroot
-  
-  │   ├─POWEROFF (Qemu-Board)
-  │   ├─Not support 'poweroff' command for Qemu-Board
-  │   └─Done. (0.944s)
-  ├─────────────────────────────────────────
-  ├─Log written to '/tbot/log/lab_qemu-board_qemu-0003.json'
-  └─SUCCESS (1.150s)
+  ├─Log written to '/log/qemu_uboot_testcases.log'
+  └─SUCCESS (0.810s)
   ```
-
