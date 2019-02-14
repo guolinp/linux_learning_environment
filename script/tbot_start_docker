@@ -12,6 +12,7 @@ fi
 mkdir -p $tbot_testcase_dir/log
 
 docker run -it --rm                                       \
+           -v $topdir:/linux_learning_environment         \
            -v $tbot_testcase_dir:/testcases               \
            -v $tbot_testcase_dir/log:/log                 \
            $tbot_docker_image                             \

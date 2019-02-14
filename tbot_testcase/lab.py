@@ -1,13 +1,11 @@
 from tbot.machine.linux import lab
 from tbot.machine import linux
 
-import tc_config
-
-class LabHost(lab.SSHLabHost):
-    name     = "LabHost:%s@%s" % (tc_config.username, tc_config.hostname)
-    hostname = tc_config.hostname
-    username = tc_config.username
-    password = tc_config.password
+class LocalLabHost(lab.SSHLabHost):
+    name     = "LocalLabHost"
+    hostname = "localhost"
+    username = "root"
+    password = "root"
 
     @property
     def ignore_hostkey(self) -> bool:
@@ -22,4 +20,4 @@ class LabHost(lab.SSHLabHost):
         p = linux.Path(self, f"/")
         return p
 
-LAB = LabHost
+LAB = LocalLabHost

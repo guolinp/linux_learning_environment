@@ -14,7 +14,6 @@
   ├── ls_testcases
   ├── run_all_testcases
   ├── run_one_testcase
-  ├── tc_config.py
   └── testcases
       ├── tc_qemu_linux_testcases.py
       └── tc_qemu_uboot_testcases.py
@@ -27,17 +26,6 @@
 - ### Get docker image, use `sudo` if need
   ```bash
   $ docker pull panguolin/tbot
-  ```
-
-- ### Config `tbot` settings in file `userconfig.py`
-  ```bash
-  # Host: ip, username, password
-  hostname = "xxx.xxx.xxx.xxx"
-  username = "xxxxxxxxxxxxxxx"
-  password = "xxxxxxxxxxxxxxx"
-  
-  # This command will be ran in Host
-  connect_board_command = "/path/to/linux_learning_environment/script/qemu_uboot_start"
   ```
 
 - ### Start `tbot` docker container

@@ -10,6 +10,15 @@ if [ x"$1" = x"--debug" ]; then
     other_options="$other_options -gdb tcp::1234 -S"
 fi
 
+if ! $qemu_system_arm --help > /dev/null 2>&1; then
+    echo "ERROR: our 'qemu-system-arm' can not work"
+    qemu_system_arm=qemu-system-arm
+    if ! $qemu_system_arm --help > /dev/null 2>&1; then
+        echo "ERROR: system 'qemu-system-arm' can not work"
+        exit 1
+    fi
+fi
+
 $qemu_system_arm -machine   vexpress-a9                                          \
                  -m         512M                                                 \
                  -kernel    $uboot_image                                         \

@@ -39,7 +39,7 @@ mkdir -p $log_basedir
 #
 # generate html report
 #
-/tbot/generators/htmllog.py $log_jsonfile > $log_htmlfile
+/usr/bin/python3.6 /tbot/generators/htmllog.py $log_jsonfile > $log_htmlfile
 
 
 #
