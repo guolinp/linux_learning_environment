@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+mkdir -p $project_dir
+
+if [ ! -d "$project_tbot_dir" ]; then
+    cd $project_dir && git clone $project_tbot_url
+else
+    echo "tbot dir: $project_tbot_dir has existed"
+fi

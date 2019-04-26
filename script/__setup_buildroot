@@ -6,7 +6,12 @@
 software_dir=$topdir/software
 
 mkdir -p $software_dir
-mkdir -p $software_dir/tarballs
+
+if [ -d $software_dir/tarballs ]; then
+    cd $software_dir/tarballs && git pull
+else
+    git clone https://gitee.com/guolinp/sources.git $software_dir/tarballs
+fi
 
 if [ ! -d "$buildroot_dir" ]; then
     echo "start compile buildroot..."

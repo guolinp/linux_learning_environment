@@ -1,8 +1,0 @@
-#!/bin/sh
-
-basedir=$(realpath $(dirname $0))
-
-for testcase_name in $($basedir/ls_testcases | xargs)
-do
-    $basedir/run_one_testcase $testcase_name
-done

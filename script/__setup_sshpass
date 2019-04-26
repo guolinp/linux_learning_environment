@@ -8,16 +8,16 @@ software_dir=$topdir/software
 mkdir -p $software_dir
 mkdir -p $software_dir/tarballs
 
-sshpass_release="sshpass-1.06"
 
 if [ ! -d "$software_dir/$sshpass_release" ]; then
     echo "start compile sshpass..."
-    cd  $software_dir &&                                                                         \
-    wget https://sourceforge.net/projects/sshpass/files/sshpass/1.06/$sshpass_release.tar.gz &&  \
-    tar xvf $sshpass_release.tar.gz &&                                                           \
-    mv $sshpass_release.tar.gz $software_dir/tarballs/ &&                                        \
-    cd $sshpass_release &&                                                                       \
-    ./configure &&                                                                               \
+    if [ ! -f $software_dir/tarballs/$sshpass_release/"$sshpass_release".tar.gz ]; then
+        cd $software_dir/tarballs &&                                              \
+        wget https://sourceforge.net/projects/sshpass/files/sshpass/1.06/"$sshpass_release".tar.gz
+    fi
+    tar xvf $software_dir/tarballs/$sshpass_release/"$sshpass_release".tar.gz -C $software_dir &&  \
+    cd $sshpass_dir &&                                                            \
+    ./configure &&                                                                \
     make
 else
     echo "sshpass dir: $sshpass_release has existed"

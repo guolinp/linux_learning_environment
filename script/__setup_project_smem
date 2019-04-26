@@ -1,0 +1,22 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+software_dir=$topdir/software
+
+mkdir -p $project_dir
+mkdir -p $software_dir/tarballs/$project_smem_release
+
+if [ ! -d "$project_smem_dir" ]; then
+    echo "start compile smem..."
+    if [ ! -f $software_dir/tarballs/$project_smem_release/"$project_smem_release".tar.gz ]; then
+        cd $software_dir/tarballs/$project_smem_release &&   \
+        wget https://www.selenic.com/smem/download/"$project_smem_release".tar.gz
+    fi
+    tar xvf $software_dir/tarballs/$project_smem_release/"$project_smem_release".tar.gz -C $project_dir &&    \
+    cd $project_smem_dir &&  \
+    $cross_gcc smemcap.c -o smemcap
+else
+    echo "smem dir: $project_smem_release has existed"
+fi

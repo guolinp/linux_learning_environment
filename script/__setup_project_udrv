@@ -1,0 +1,11 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+mkdir -p $project_dir
+
+if [ ! -d "$project_udrv_dir" ]; then
+    cd $project_dir && git clone $project_udrv_url
+else
+    echo "udrv dir: $project_udrv_dir has existed"
+fi

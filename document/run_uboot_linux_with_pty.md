@@ -1,13 +1,19 @@
 # Run uboot or linux with a pty
 
-## Run uboot
-- run script `pty_run_uboot` to start in the first terminal. press `ctrl+c` to exit.
+## install pty_connecter tool
+```bash
+$ cd linux_learning_environment
+$ ./script/__setup_pty_connecter
+```
+
+## u-boot
+- Run script `pty_run_uboot` to start in the first terminal. press `ctrl+c` to exit.
 ```bash
 $ cd linux_learning_environment
 $ ./script/pty_run_uboot 
 create pty: ./script/board_uboot.tty --> /dev/pts/45
 ```
-- in the second terminal, run script `pty_access_uboot` to access uboot. press `ctrl+c` to disconnect.
+- In the second terminal, run script `pty_access_uboot` to access uboot. press `ctrl+c` to disconnect.
 ```bash
 $ cd linux_learning_environment
 $ ./script/pty_access_uboot
@@ -18,14 +24,14 @@ bdinfo  - print Board Info structure
 ...
 ```
 
-## Run linux
-- run script `pty_run_linux` to start in the first terminal. press `ctrl+c` to exit.
+## linux
+- Run script `pty_run_linux` to start in the first terminal. press `ctrl+c` to exit.
 ```bash
 $ cd linux_learning_environment
 $ ./script/pty_run_linux 
 create pty: ./script/board_linux.tty --> /dev/pts/45
 ```
-- in the second terminal, run script `pty_access_linux` to access linux. press `ctrl+c` to disconnect.
+- In the second terminal, run script `pty_access_linux` to access linux. press `ctrl+c` to disconnect.
 ```bash
 $ cd linux_learning_environment
 $ ./script/pty_access_linux

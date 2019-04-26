@@ -1,0 +1,24 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+
+software_dir=$topdir/software
+
+mkdir -p $software_dir
+mkdir -p $software_dir/tarballs
+
+
+if [ ! -d "$software_dir/$pty_connecter_release" ]; then
+    echo "start compile pty_connecter..."
+    if [ ! -f $software_dir/tarballs/$pty_connecter_release/"$pty_connecter_release".tar.gz ]; then
+        mkdir -p $software_dir/tarballs/$pty_connecter_release &&     \
+        cd $software_dir/tarballs/$pty_connecter_release &&           \
+        wget https://gitee.com/guolinp/sources/raw/master/pty_connecter-2.0/"$pty_connecter_release".tar.gz
+    fi
+    tar xvf $software_dir/tarballs/$pty_connecter_release/"$pty_connecter_release".tar.gz -C $software_dir &&  \
+    cd $pty_connecter_dir &&  \
+    $host_gcc pty_connecter.c -o pty_connecter
+else
+    echo "pty_connecter dir: $pty_connecter_release has existed"
+fi

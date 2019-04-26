@@ -1,0 +1,11 @@
+#!/bin/sh
+
+. $(dirname $0)/system.conf
+
+mkdir -p $project_dir
+
+if [ ! -d "$project_tests_dir" ]; then
+    cd $project_dir && git clone $project_tests_url
+else
+    echo "tests dir: $project_tests_dir has existed"
+fi

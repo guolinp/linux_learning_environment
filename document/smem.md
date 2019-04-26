@@ -5,38 +5,40 @@
 - ### link: https://www.selenic.com/smem
 
 ## Install smem
-- ### the `smem` is installed by default in script `script/setup_environment`
-- ### if you have not installed it, run the script:
+- ### run the script:
   ```bash
-  $ ./script/__setup_smem
+  $ ./script/__setup_project_smem
   ```
+
 - ### the `smemcap` is ran on target board to collect board memory usage, the `smem` is a script ran on host to parse the report
   ```bash
-  $ ls software/smem-1.4 
+  $ ls project/smem-1.4 
   COPYING  smem  smem.8  smemcap  smemcap.c
   ```
+
 ## Example
-- Start linux in QEMU
+- start linux in QEMU
    ```bash
    $ ./script/qemu_linux_start 
    ```
-- Copy `smemcap` to guest linux
+- copy `smemcap` to guest linux
    ```bash
-   $ ./script/copy_to_linux software/smem-1.4/smemcap
+   $ ./script/copy_to_linux project/smem-1.4/smemcap
    #1# check the smemcap in current directory
-   -rwxr-xr-x 1 guolinp platform 7716 Jan 28 13:00 software/smem-1.4/smemcap
+   -rwxr-xr-x 1 guolinp platform 7716 Jan 28 13:00 project/smem-1.4/smemcap
    #2# start copy...
    #3# check the smemcap in guest /share/
    -rwx------    1 root     root          7716 Jan 29 00:59 /share/smemcap
    ```
-- Run `smemcap` in guest linux
+- run `smemcap` in guest linux
    ```bash
    $ ./script/login_linux 
    # cd /share
    # ./smemcap > capdata.gz
    # exit
    ```
-- Copy `capdata.gz` to host
+
+- copy `capdata.gz` to host
    ```bash
    $ ./script/copy_from_linux capdata.gz
    #1# check the capdata.gz in guest /share/
@@ -45,9 +47,9 @@
    #3# check the capdata.gz in current directory
    -rw-r--r-- 1 guolinp platform 239616 Jan 29 09:01 ./capdata.gz
    ```
-- Generate report with `smem` in host, see help for more details
+- generate report with `smem` in host, see help for more details
    ```bash
-   $ ./software/smem-1.4/smem -S capdata.gz -s pid -t
+   $ ./project/smem-1.4/smem -S capdata.gz -s pid -t
      PID User     Command                         Swap      USS      PSS      RSS 
        1 0        init                               0       56      154      748 
      726 0        /sbin/syslogd -n                   0      116      237      884 
@@ -61,19 +63,24 @@
    -------------------------------------------------------------------------------
        9 1                                           0      740     1721     6580 
    ```
+- generate report with picture by adding extra `--bar` or `--pie`
+   ```bash
+   $ ./project/smem-1.4/smem -S capdata.gz --bar pid -c"pss rss"
+   $ ./project/smem-1.4/smem -S capdata.gz --pie name -s pss
+   ```
 
-## Script `script/smem`
-- It has most steps in above example
-- Start linux in QEMU
+## script `script/smem`
+- it has most steps in above example
+- start linux in QEMU
    ```bash
    $ ./script/qemu_linux_start 
    ```
-- Run `script/smem`
+- run `script/smem`
    ```bash
    $ ./script/smem 
-   [smem] copy ....../linux_learning_environment/software/smem-1.4/smemcap to guest linux
+   [smem] copy ....../linux_learning_environment/project/smem-1.4/smemcap to guest linux
    #1# check the smemcap in current directory
-   -rwxr-xr-x 1 guolinp platform 7716 Jan 28 13:00 ....../linux_learning_environment/software/smem-1.4/smemcap
+   -rwxr-xr-x 1 guolinp platform 7716 Jan 28 13:00 ....../linux_learning_environment/project/smem-1.4/smemcap
    #2# start copy...
    #3# check the smemcap in guest /share/
    -rwx------    1 root     root          7716 Jan 29 01:05 /share/smemcap
@@ -125,4 +132,3 @@
    free memory                  200188     200188          0 
    [smem] remove 'capdata.gz'
    ```
-

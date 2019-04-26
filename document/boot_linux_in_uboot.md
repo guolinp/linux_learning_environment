@@ -20,13 +20,15 @@
   ```
 
 - ## Run below commands
-  ```bash
-  setenv bootargs 'root=/dev/mmcblk0 rw console=ttyAMA0 init=/linuxrc'
-  ext2load mmc 0:0 0x60100000 /boot/uImage
-  ext2load mmc 0:0 0x60600000 /boot/vexpress-v2p-ca9.dtb
-  bootm 0x60100000 - 0x60600000
-  ```
-
+  - The raw commands
+    ```bash
+    setenv bootargs 'root=/dev/mmcblk0 rw console=ttyAMA0 init=/linuxrc'
+    ext2load mmc 0:0 0x60100000 /boot/uImage
+    ext2load mmc 0:0 0x60600000 /boot/vexpress-v2p-ca9.dtb
+    bootm 0x60100000 - 0x60600000
+    ```
+  - You can also use `run bootcmd`
+  
 - ## The boot logs
   ```bash
   => setenv bootargs 'root=/dev/mmcblk0 rw console=ttyAMA0 init=/linuxrc'

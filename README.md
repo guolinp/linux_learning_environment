@@ -1,12 +1,18 @@
 # What is it?
 * This project targets to build an environment for linux learning such as driver, application, test...
 
-# Documents
-* [How to setup environment?](https://github.com/guolinp/linux_learning_environment/blob/master/document/setup_environment.md)
-* [How to run u-boot in qemu?](https://github.com/guolinp/linux_learning_environment/blob/master/document/qemu_run_uboot.md)
-* [How to run linux in qemu?](https://github.com/guolinp/linux_learning_environment/blob/master/document/qemu_run_linux.md)
-* [How to boot linux in uboot?](https://github.com/guolinp/linux_learning_environment/blob/master/document/boot_linux_in_uboot.md)
-* [How to run uboot or linux with a pty?](https://github.com/guolinp/linux_learning_environment/blob/master/document/run_uboot_linux_with_pty.md)
-* [How to run tbot testcase?](https://github.com/guolinp/linux_learning_environment/blob/master/document/tbot_run_testcase.md)
-* [How to run lepd/lepv?](https://github.com/guolinp/linux_learning_environment/blob/master/document/linuxep.md)
-* [How to run smem?](https://github.com/guolinp/linux_learning_environment/blob/master/document/smem.md)
+# Basic operations
+* [setup environment](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/setup_environment.md)
+* [run u-boot in qemu](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/qemu_run_uboot.md)
+* [run linux in qemu](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/qemu_run_linux.md)
+* [boot linux in uboot](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/boot_linux_in_uboot.md)
+* [run uboot or linux with a pty](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/run_uboot_linux_with_pty.md)
+* [ssh login linux](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/sshlogin.md)
+* [copy files via scp](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/scp.md)
+
+# Practice projects
+* [smem](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/smem.md)
+* [tbot](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/tbot.md)
+* [linuxep](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/linuxep.md)
+* [linux device driver](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/linux_device_driver.md)
+* [test examples](https://gitee.com/guolinp/linux_learning_environment/blob/master/document/tests.md)

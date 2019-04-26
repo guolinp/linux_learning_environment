@@ -3,24 +3,34 @@
 ## What is the tbot?
 `tbot` is a testing/automation tool that is focused on usage in embedded development. At its core `tbot` just provides utilities for interaction with remote hosts/targets and an extensive library of routines that are common in embedded development/testing. `tbot` aims to be a support for the developer while working on a project and without much modification also allow running tests in an automated setting.
 
-## What does in the framework?
-- ### Some utility scripts were added to make test case be ran simplify with `tbot` , go to below directory to check.
+## Install `tbot` project
   ```bash
-  $ cd linux_learning_environment/tbot_testcase
+  $ cd linux_learning_environment
+  $ ./script/__setup_project_tbot 
+  ```
+
+## Some utility scripts were added to make test case be ran simplify with `tbot`
+  ```bash
+  $ cd linux_learning_environment/project/tbot
   $ tree
   .
+  ├── all_scripts_must_work_in_tbot_container
   ├── board.py
+  ├── hack
+  │   ├── channel.py
+  │   └── htmllog.py
   ├── lab.py
   ├── ls_testcases
+  ├── README
   ├── run_all_testcases
   ├── run_one_testcase
   └── testcases
       ├── tc_qemu_linux_testcases.py
       └── tc_qemu_uboot_testcases.py
   ```
-- ### Because the `tbot` installation is not easy, a docker image was introduced which contains all of `tbot` stuffs.
-  - the `tbot` docker: https://github.com/guolinp/tbot_docker
 
+## Because the `tbot` installation is not easy, a docker image was introduced which contains all of `tbot` stuffs.
+  - the `tbot` docker: https://github.com/guolinp/tbot_docker
 
 ## Run test case
 - ### Get docker image, use `sudo` if need
@@ -32,13 +42,13 @@
   ```bash
   $ cd linux_learning_environment
   $ ./script/tbot_start_docker
-  bash-4.4#
+  #
   ```
 
 - ### In container shell
   - #### run tbot selftest
     ```bash
-    bash-4.4# tbot selftest
+    # tbot selftest
     tbot starting ...
     ├─Calling selftest ...
     │   ├─Calling testsuite ...
@@ -67,15 +77,16 @@
     ```
   - #### list existed user testcases
     ```bash
-    bash-4.4# cd /tbot/testcases
-    bash-4.4# ./ls_testcases 
+    # cd /testcases
+    # ./ls_testcases 
     qemu_linux_testcases
     qemu_uboot_testcases
     ```
   
   - #### run existed user testcase
     ```bash
-    bash-4.4# run_one_testcase qemu_linux_testcases
+    # cd /testcases
+    # ./run_one_testcase qemu_linux_testcases
     tbot starting ...
     ├─Calling qemu_linux_testcases ...
     │   ├─POWERON (QemuBoard)

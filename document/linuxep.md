@@ -6,7 +6,7 @@
   - `lepv` is a client that interactives with `lepd`, it may be a web page
 
 ## Run `lepd` in qemu board
-- ### install the linuxep project, the following script will clone and compile `lepd`
+- ### Install the linuxep project, the following script will clone and compile `lepd`
   ```bash
   $ cd linux_learning_environment
   $ ./script/__setup_project_linuxep                                    
@@ -69,7 +69,8 @@
   ```
 - ### Open browser with address `HOST-IP:22080`
   - there is a window in web page which requires an address
-  - fill the host IP and click connect-button
+  - fill the host IP and click `connect-button`
+  - if connect failed, check if the `lepd` has existed in guest linux, if yes, restart it `lepd &`
 - ### Stop the `lepv` container
   ```bash
   $ cd linux_learning_environment

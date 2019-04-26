@@ -4,8 +4,8 @@
 
 program=$(basename $0)
 
-smemcap=$smem_dir/smemcap
-hostsmem=$smem_dir/smem
+smemcap=$project_smem_dir/smemcap
+hostsmem=$project_smem_dir/smem
 capdata=capdata.gz
 
 echo "[$program] copy $smemcap to guest linux"

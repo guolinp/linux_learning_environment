@@ -1,5 +1,0 @@
-#!/bin/sh
-
-testcase_dir="/testcases/testcases"
-
-/root/.local/bin/tbot -T $testcase_dir --list-testcases | grep -E "qemu_linux_|qemu_uboot_"
